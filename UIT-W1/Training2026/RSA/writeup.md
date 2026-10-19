@@ -11,7 +11,12 @@ Các bạn nên xem qua [cách thuật toán RSA mã hóa](https://www.geeksforg
 - Kĩ thuật: **Hastad's Broadcast Attack**.
 
 ### 2. Quan sát ban đầu
-Nhìn sơ qua, quá trình mã hóa tương tự như RSA: Chọn 2 số nguyên tố siêu to p và q, tính N = pq; chọn số mũ e (thường là 65537); chuyển plaintext m từ dạng bytes sang integer. Cuối cùng, ta có ciphertext: c = m<sup>e</sup> mod N.
+Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
+- Chuyển plaintext m từ dạng bytes sang integer.
+- Chọn 2 số nguyên tố siêu to p và q, tính N = pq.
+- Chọn số mũ e (thường là 65537).
+- Ta có ciphertext: c = m<sup>e</sup> mod N.
+- Cuối cùng, hàm trả về N, e, c.
 <div align="center"><img width="418" height="169" alt="image" src="https://github.com/user-attachments/assets/117a2074-a220-4040-b7ab-4d86207ac41c" /></div>
 
 
@@ -21,3 +26,8 @@ Nhìn sơ qua, quá trình mã hóa tương tự như RSA: Chọn 2 số nguyên
 
 - Tuy nhiên thì số mũ e có giá trị rát nhỏ là 3. Mình chắc chắn là sẽ có một exploit khai thác điều này (đọc tiếp sẽ biết =)) ).
 - Ở đoạn cuối, từng plaintext m được lấy ra từ *messages* trong module *secret* bí ẩn nào đó để mã hóa. Theo mình đoán thì *messages* là 1 list chứa nhiều plaintext khác nhau, và 1 trong số chúng là flag ta cần tìm.
+<div align="center"><img width="421" height="111" alt="image" src="https://github.com/user-attachments/assets/85794f60-4f6f-43b7-8dbf-e773648b0198" /></div>
+
+Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tương ứng với 7 plaintext m trong list *messages* hồi nãy.
+
+
