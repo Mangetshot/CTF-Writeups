@@ -5,7 +5,7 @@ Ban đầu không biết độ khó nên mình làm bài này trước cả bài
 
 ### 1. Tổng quan
 - Có 2 file: script mã hóa dùng thuật toán RSA và file output chứa nhiều ciphertext dưới dạng số + số mũ e và số chia N dùng trong mã hóa RSA.
-- Mục tiêu: TÌm flag từ các số N, e, c đã cho.
+- Mục tiêu: Tìm flag từ các số N, e, c đã cho.
 - Kĩ thuật: Hastad's Broadcast Attack.
 
 ### 2. Quan sát ban đầu
