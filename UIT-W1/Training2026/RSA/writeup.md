@@ -28,6 +28,7 @@ Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
 - Ở đoạn cuối, từng plaintext m được lấy ra từ *messages* trong module *secret* bí ẩn nào đó để mã hóa. Theo mình đoán thì *messages* là 1 list chứa nhiều plaintext khác nhau, và 1 trong số chúng là flag ta cần tìm.
 <div align="center"><img width="421" height="111" alt="image" src="https://github.com/user-attachments/assets/85794f60-4f6f-43b7-8dbf-e773648b0198" /></div>
 
-Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tương ứng với 7 plaintext m trong list *messages* hồi nãy.
+Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tương ứng với 7 plaintext m trong list *messages* hồi nãy. Có thể thấy, mọi giá trị n và c **RẤT LỚN**, nhưng e luôn luôn bằng 3.
+<img width="1919" height="847" alt="image" src="https://github.com/user-attachments/assets/60be2d46-b3fe-45bc-9cd8-2615b4c53472" />
 
-
+Điều đầu tiên mình làm là thử tính căn bậc e (= 3) của từng c: **trong vài trường hợp, m<sup>e</sup> < n => c = m<sup>e</sup> (mod n) = m<sup>e</sup>**. Từ đó, chỉ cần lấy căn e của c là sẽ ra lại m...
