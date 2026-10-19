@@ -24,7 +24,7 @@ Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
 - SNT p và q được chọn ngẫu nhiên với **kích thước rất lớn** là 1024 bits, do đó tấn công brute-force đơn thuần là điều không thể. Ngoài ra theo mình tìm hiểu thì hàm getPrime() cũng không có lỗ hổng trong việc chọn ngẫu nhiên SNT nên các exploit liên quan đến việc phân tích N ra thừa số nguyên tố cũng không khả thi.
 <div align="center"><img width="152" height="40" alt="image" src="https://github.com/user-attachments/assets/1b3b77ce-aab1-49ca-a928-0b909da68915" /></div>
 
-- Tuy nhiên thì số mũ e có giá trị rát nhỏ là 3. Mình chắc chắn là sẽ có một exploit khai thác điều này (đọc tiếp sẽ biết =)) ).
+- Tuy nhiên thì số mũ e có giá trị rất nhỏ là 3. Mình chắc chắn là sẽ có một exploit khai thác điều này (đọc tiếp sẽ biết =)) ).
 - Ở đoạn cuối, từng plaintext m được lấy ra từ *messages* trong module *secret* bí ẩn nào đó để mã hóa. Theo mình đoán thì *messages* là 1 list chứa nhiều plaintext khác nhau, và 1 trong số chúng là flag ta cần tìm.
 <div align="center"><img width="421" height="111" alt="image" src="https://github.com/user-attachments/assets/85794f60-4f6f-43b7-8dbf-e773648b0198" /></div>
 
