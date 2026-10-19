@@ -13,3 +13,6 @@ Các bạn nên xem qua [cách thuật toán RSA mã hóa](https://www.geeksforg
 ### 2. Quan sát ban đầu
 Khi đọc script, có 2 thứ mà mình để ý:
 - Số nguyên tố p và q được chọn ngẫu nhiên với **kích thước rất lớn** là 1024 bits, do đó tấn công brute-force đơn thuần là điều không thể. Ngoài ra theo mình tìm hiểu thì hàm getPrime() cũng không có lỗ hỏng trong việc chọn ngẫu nhiên SNT nên các exploit liên quan đến phân tích N ra thừa số nguyên tố cũng không khả thi.
+<div align="center"><img width="152" height="40" alt="image" src="https://github.com/user-attachments/assets/1b3b77ce-aab1-49ca-a928-0b909da68915" /></div>
+
+- Tuy nhiên thì số mũ e có giá trị rát nhỏ là 3. Mình chắc chắn là sẽ có một exploit khai thác điều này, và sau khi tra cứu thì đúng là như vậy: Hastad's Broadcast Attack. 
