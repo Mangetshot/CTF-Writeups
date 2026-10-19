@@ -11,7 +11,7 @@
 ### 2. Quan sát ban đầu
 Nhìn vào script, ta thấy module AES được dùng để mã hóa flag, và chế độ mã hóa ECB được dùng (mã hóa từng block riêng lẻ một cách độc lập, tai tiếng vì tính rủi ro bảo mật cao).
 
-Ngoài ra, thứ đập vào mắt mình là dòng code chọn ngẫu nhiên key dùng để mã hóa: `key_int = secrets.randbelow(1_000_001)`. Đây chắc chắn là một lỗ hỏng ta có thể exploit khi độ lớn key chỉ vỏn vẹn từ 0-1.000.000 (đâu đó khoảng 20 bits).
+Ngoài ra, thứ đập vào mắt mình là dòng code chọn ngẫu nhiên key dùng để mã hóa: `key_int = secrets.randbelow(1_000_001)`. Đây chắc chắn là một lỗ hổng ta có thể exploit khi độ lớn key chỉ vỏn vẹn từ 0-1.000.000 (đâu đó khoảng 20 bits).
 
 Sau khi suy nghĩ các hướng giải theo hướng exploit ECB, mình nhận ra trong module AES có hàm decrypt!!: `AES.new(key, AES.MODE_ECB).decrypt()`. 
 
