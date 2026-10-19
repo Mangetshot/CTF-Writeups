@@ -13,7 +13,7 @@ Các bạn nên xem qua [cách thuật toán RSA mã hóa](https://www.geeksforg
 ### 2. Quan sát ban đầu
 Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
 - Chuyển plaintext m từ dạng bytes sang integer.
-- Chọn 2 số nguyên tố siêu to p và q, tính N = pq.
+- Chọn 2 số nguyên tố siêu to p và q, tính số mô-đun N = pq.
 - Chọn số mũ e (thường là 65537).
 - Ta có ciphertext: c = m<sup>e</sup> mod N.
 - Cuối cùng, hàm trả về N, e, c.
@@ -35,5 +35,8 @@ Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tư�
 <img width="1779" height="190" alt="image" src="https://github.com/user-attachments/assets/cad02b3a-ea56-42de-9832-dfabc4b86680" />
 ...và cả 7 kết quả đều ra căn 3 không hoàn thiện T-T. Từ đó ta có thể kết luận rằng **m<sup>e</sup> > n với mọi n**.
 
-Sau khi thất bại, mình bắt đầu theo hướng exploit số mũ e nhỏ. Mình tra cứu một lúc thì tìm ra **Hastad's Broadcast Attack** khai thác đúng lỗ hổng này:
-- Giả sử Alice gửi cùng 1 tin nhắn cho nhiều người khác nhau sử dụng RSA. Alice chỉ chọn đúng 1 số mũ e nhỏ nhưng vẫn chọn các số N khác nhau cho từng lần gửi.
+Sau khi thất bại, mình bắt đầu theo hướng exploit số mũ e nhỏ được dùng nhiều lần. Mình tra cứu một lúc thì tìm ra **Hastad's Broadcast Attack**.
+
+Về cơ bản, kĩ thuật tấn công này lợi dụng việc gửi 1 plaintext nhiều lần, và với mỗi cặp (c, n) mới sẽ moi thêm thông tin về plaintext gốc:
+- Giả sử Alice gửi cùng 1 tin nhắn cho nhiều người khác nhau sử dụng RSA. Alice chỉ chọn đúng 1 số mũ e nhỏ nhưng vẫn chọn các số mô-đun n khác nhau để cho ra các ciphertext c khác nhau cho từng lần gửi.
+- **Nếu e đủ nhỏ**, Eve muốn tìm ra tin nhắn ban đầu thì chỉ cần biết **ít nhất e cặp (c, n)** mà không cần đến private key.
