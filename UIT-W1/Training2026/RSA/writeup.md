@@ -31,4 +31,9 @@ Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
 Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tương ứng với 7 plaintext m trong list *messages* hồi nãy. Có thể thấy, mọi giá trị n và c **RẤT LỚN**, nhưng e luôn luôn bằng 3.
 <img width="1919" height="847" alt="image" src="https://github.com/user-attachments/assets/60be2d46-b3fe-45bc-9cd8-2615b4c53472" />
 
-Điều đầu tiên mình làm là thử tính căn bậc e (= 3) của từng c: **trong vài trường hợp, m<sup>e</sup> < n => c = m<sup>e</sup> (mod n) = m<sup>e</sup>**. Từ đó, chỉ cần lấy căn e của c là sẽ ra lại m...
+Điều đầu tiên mình làm là thử tính căn bậc e (= 3) của từng c: **trong vài trường hợp, m<sup>e</sup> < n => c = m<sup>e</sup> (mod n) = m<sup>e</sup>**. Từ đó, chỉ cần lấy căn 3 của c là sẽ ra lại m...
+<img width="1779" height="190" alt="image" src="https://github.com/user-attachments/assets/cad02b3a-ea56-42de-9832-dfabc4b86680" />
+...và cả 7 kết quả đều ra căn 3 không hoàn thiện T-T. Từ đó ta có thể kết luận rằng **m<sup>e</sup> > n với mọi n**.
+
+Sau khi thất bại, mình bắt đầu theo hướng exploit số mũ e nhỏ. Mình tra cứu một lúc thì tìm ra **Hastad's Broadcast Attack** khai thác đúng lỗ hổng này:
+- Giả sử Alice gửi cùng 1 tin nhắn cho nhiều người khác nhau sử dụng RSA. Alice chỉ chọn đúng 1 số mũ e nhỏ nhưng vẫn chọn các số N khác nhau cho từng lần gửi.
