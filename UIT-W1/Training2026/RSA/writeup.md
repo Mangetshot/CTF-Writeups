@@ -21,7 +21,7 @@ Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
 <div align="center"><img width="418" height="169" alt="image" src="https://github.com/user-attachments/assets/117a2074-a220-4040-b7ab-4d86207ac41c" /></div>
 
 Ở đây có vài thứ mình để ý:
-- SNT p và q được chọn ngẫu nhiên với **kích thước rất lớn** là 1024 bits, do đó tấn công brute-force đơn thuần là điều không thể. Ngoài ra theo mình tìm hiểu thì hàm getPrime() cũng không có lỗ hổng trong việc chọn ngẫu nhiên SNT nên các exploit liên quan đến việc phân tích N ra thừa số nguyên tố cũng không khả thi.
+- SNT p và q được chọn ngẫu nhiên với **kích thước rất lớn** là 1024 bits, do đó tấn công brute-force đơn thuần là điều không thể. Ngoài ra theo mình tìm hiểu thì hàm getPrime() cũng không có lỗ hổng trong việc chọn ngẫu nhiên SNT nên các exploit liên quan đến Prime Factorization cũng không khả thi.
 
 <div align="center"><img width="152" height="40" alt="image" src="https://github.com/user-attachments/assets/1b3b77ce-aab1-49ca-a928-0b909da68915" /></div>
 
@@ -57,12 +57,54 @@ Và đúng thật là trong bài writeup đã sử dụng hướng tấn công H
 Như vậy, giờ ta sẽ bắt đầu đào sâu hơn vào cách mà Hastad's Broadcast Attack hoạt động (không thích dài dòng thì đi tới phần [lời giải](#solution) nha).
 
 ### 3. Hastad's Broadcast Attack
-Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: **nếu ta biết được các số dư (tức là c) từ các phép chia 1 số nguyên (tức là m<sup>3</sup>, số ta cần tìm) cho nhiều số nguyên khác nhau (số mô đun n), thì ta sẽ có thể tính được _số dư x của phép chia số m<sup>3</sup> cho tích các số mô đun n_ (mà không cần biết trước số m<sup>3</sup> là gì).**
+Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem hay CRT)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: **nếu ta biết được các số dư (tức là c) từ các phép chia 1 số nguyên (tức là m<sup>3</sup>, số ta cần tìm) cho nhiều số nguyên khác nhau (số mô đun n), thì ta sẽ có thể tính được _số dư x của phép chia số m<sup>3</sup> cho tích các số mô đun n_ (mà không cần biết trước số m<sup>3</sup> là gì).**
 <div align="center"><img width="522" height="332" alt="image" src="https://github.com/user-attachments/assets/9fd8bb92-4ad6-4db4-8f8f-98d1c2104939" /></div>
 
 Nhưng mà ta cần tính m chứ đâu cần tính x chi đâu??
 
-**Trừ khi x cũng chính là m<sup>3</sup>**. Điều này xảy ra khi **m<sup>3</sup> < n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**, và điều kiện này gần như là luôn đúng với
+**Trừ khi x cũng chính là m<sup>3</sup>!!**. Điều này xảy ra khi **m<sup>3</sup> < n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Điều kiện này gần như là luôn đúng đối với thuật toán RSA thông thường, trong đó độ lớn plaintext m (khi đã chuyển về integer) được đảm bào nhỏ hơn số mô đun n cho quá trình mã hóa và giải mã.
+
+Thật ra để áp dụng CRT thì vẫn cần một điều kiện quan trọng nữa: **cả 3 số mô đun n<sub>0</sub>, n<sub>1</sub>, n<sub>2</sub> phải [đôi một nguyên tố cùng nhau (pairwise-coprime)](https://vi.wikipedia.org/wiki/S%E1%BB%91_nguy%C3%AAn_t%E1%BB%91_c%C3%B9ng_nhau)**. Hiểu đơn giản là không được chọn trùng lặp các số SNT để cấu thành nên các số mô đun n khác nhau. Để kiểm tra thì mình đã lần lượt bỏ 2 trong 7 số mô đun vào hàm gcd() mà mình tự code để tìm ra ƯCLN (Nếu điều kiện không thỏa thì đây sẽ càng là một lỗ hổng nghiêm trọng mà ta có thể exploit).
+
+```
+n_list = []
+c_list = []
+n, e, c = 0, 0, 0
+
+with open('output_0ef6d6343784e59e2f44f61d2d29896f.txt', 'r') as f: #Thu thập các giá trị n, e, c từ file output.txt
+    for line in f.readlines():
+        first = line[0]
+        stripped = line.strip()[4:]
+
+        if first == 'n':
+            n = int(stripped)
+        elif first == 'e':
+            e = int(stripped)
+        elif first == 'c':
+            c = int(stripped)
+
+        if n != 0 and c != 0:
+            n_list.append(n)
+            c_list.append(c)
+            n, c = 0, 0
+
+def gcd(a: int, b: int) -> int:
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+n_len = len(n_list)
+for i in range(n_len-1):
+    for j in range(i+1, n_len):
+        res = gcd(n_list[i], n_list[j])
+        if res != 1:
+            print(f"Moduli {i} and {j} have a common factor: {res}")
+```
+Khi chạy thì terminal không in ra gì cả, nghĩa là điều kiện đã được thỏa.
+
+Tiếp đến là bước quan trọng nhất: **Làm như thế nào để tính x??**
+
+
 
 <a id="solution"></a>
 ### 4. Lời giải 
