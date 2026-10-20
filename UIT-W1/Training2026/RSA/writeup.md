@@ -17,22 +17,27 @@ Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
 - Chọn số mũ e (thường là 65537).
 - Ta có ciphertext: c = m<sup>e</sup> mod N.
 - Cuối cùng, hàm trả về N, e, c.
-<div align="center"><img width="418" height="169" alt="image" src="https://github.com/user-attachments/assets/117a2074-a220-4040-b7ab-4d86207ac41c" /></div>
 
+<div align="center"><img width="418" height="169" alt="image" src="https://github.com/user-attachments/assets/117a2074-a220-4040-b7ab-4d86207ac41c" /></div>
 
 Ở đây có vài thứ mình để ý:
 - SNT p và q được chọn ngẫu nhiên với **kích thước rất lớn** là 1024 bits, do đó tấn công brute-force đơn thuần là điều không thể. Ngoài ra theo mình tìm hiểu thì hàm getPrime() cũng không có lỗ hổng trong việc chọn ngẫu nhiên SNT nên các exploit liên quan đến việc phân tích N ra thừa số nguyên tố cũng không khả thi.
+
 <div align="center"><img width="152" height="40" alt="image" src="https://github.com/user-attachments/assets/1b3b77ce-aab1-49ca-a928-0b909da68915" /></div>
 
 - Tuy nhiên thì số mũ e có giá trị rất nhỏ là 3. Mình chắc chắn là sẽ có một exploit khai thác điều này (đọc tiếp sẽ biết =)) ).
 - Ở đoạn cuối, từng plaintext m được lấy ra từ *messages* trong module *secret* bí ẩn nào đó để mã hóa. Theo mình đoán thì *messages* là 1 list chứa nhiều plaintext khác nhau, và 1 trong số chúng là flag ta cần tìm.
+
 <div align="center"><img width="421" height="111" alt="image" src="https://github.com/user-attachments/assets/85794f60-4f6f-43b7-8dbf-e773648b0198" /></div>
 
 Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tương ứng với 7 plaintext m trong list *messages* hồi nãy. Có thể thấy, mọi giá trị n và c **RẤT LỚN**, nhưng e luôn luôn bằng 3.
+
 <img width="1919" height="847" alt="image" src="https://github.com/user-attachments/assets/60be2d46-b3fe-45bc-9cd8-2615b4c53472" />
 
 Điều đầu tiên mình làm là thử tính căn bậc e (= 3) của từng c: **trong vài trường hợp, m<sup>e</sup> < n => c = m<sup>e</sup> (mod n) = m<sup>e</sup>**. Từ đó, chỉ cần lấy căn 3 của c là sẽ ra lại m...
+
 <img width="1779" height="190" alt="image" src="https://github.com/user-attachments/assets/cad02b3a-ea56-42de-9832-dfabc4b86680" />
+
 ...và cả 7 kết quả đều ra căn 3 không hoàn thiện T-T. Từ đó ta có thể kết luận rằng **m<sup>e</sup> > n với mọi n**.
 
 Sau khi thất bại, mình bắt đầu theo hướng exploit số mũ e nhỏ được dùng nhiều lần. Mình tra cứu một lúc thì tìm ra **Hastad's Broadcast Attack**.
@@ -40,5 +45,9 @@ Sau khi thất bại, mình bắt đầu theo hướng exploit số mũ e nhỏ 
 Về cơ bản, kĩ thuật tấn công này lợi dụng việc gửi 1 plaintext nhiều lần, và với mỗi cặp (c, n) mới sẽ moi thêm thông tin về plaintext gốc:
 - Giả sử Alice gửi cùng 1 tin nhắn cho nhiều người khác nhau sử dụng RSA. Alice chỉ chọn đúng 1 số mũ e nhỏ nhưng vẫn chọn các số mô-đun n khác nhau để cho ra các ciphertext c khác nhau cho từng lần gửi.
 - **Nếu e đủ nhỏ**, Eve muốn tìm ra tin nhắn ban đầu thì chỉ cần biết **ít nhất e cặp (c, n)** mà không cần đến private key.
-  <div align="center"><img width="496" height="334" alt="image" src="https://github.com/user-attachments/assets/dab48259-3112-4bf1-bd58-b6f9855c0c70" /></div>
 
+  <div align="center"><img width="744" height="501" alt="image" src="https://github.com/user-attachments/assets/dab48259-3112-4bf1-bd58-b6f9855c0c70" /></div>
+
+**Mà khoan**, để exploit này hoạt động thì _chỉ duy nhất 1 plaintext m_ được gửi nhiều lần. Chẳng phải điều này trái lại với giả thuyết mình đề ra rằng nhiều m khác nhau đã được đưa vô hàm RSA_ecnrypt() trong file output.txt sao??
+
+Ban đầu mình nghĩ ngay cả hướng này cũng không đúng nên đã lục lọi thêm nhiều exploit khác nữa nhưng mà cũng không khả thi. Cuối cùng thì mình đã xem bài writeup [này](https://github.com/KranBoring/CTF-Solutions/blob/main/Others-Events/2026/W1n.game_Training/RSA/write-up.md) được đăng trên group Discord của CLB, có vẻ là từ 1 thành viên của TeamT.
