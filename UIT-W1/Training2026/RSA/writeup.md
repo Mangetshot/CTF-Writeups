@@ -1,12 +1,12 @@
 # RSA
 **Event: W1 Training2026 | Category: Cryptography | Date: 19/10/2026 | Challenge: [script](johan_335f59b72545e3e27e60453719d50288.py), [output](output_0ef6d6343784e59e2f44f61d2d29896f.txt)**
 
-Ban đầu không biết độ khó nên mình làm bài này trước cả bài ECB, và đây là *MỘT SAI LẦM TAI HẠI*. Mình dành cả ngày để đọc và hiểu hướng giải, sau đó là 2-3 ngày liên tiếp để tự tạo và debug script exploit. Nhưng mà bù lại thì mình đã học được khá nhiều thứ về RSA và phép toán modulo=))
+Ban đầu không biết độ khó nên mình làm bài này trước cả bài ECB, và đây là *MỘT SAI LẦM TAI HẠI*. Mình dành cả ngày để đọc và hiểu hướng giải, sau đó là 2-3 ngày liên tiếp để tự tạo và debug script exploit. Nhưng mà bù lại thì mình đã học được khá nhiều thứ về RSA và số học mô đun=))
 
-Các bạn nên xem qua [cách thuật toán RSA mã hóa](https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/) để hiểu rõ bài này.
+Các bạn nên xem qua [cách thuật toán RSA mã hóa](https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/), và căn bản về [số học mô đun](https://www.geeksforgeeks.org/engineering-mathematics/modular-arithmetic/) để hiểu rõ hơn về bài này.
 
 ### 1. Tổng quan
-- Có 2 file: script mã hóa dùng thuật toán RSA và file output chứa nhiều ciphertext dưới dạng số + số mũ e và số mô-đun N dùng trong mã hóa RSA.
+- Có 2 file: script mã hóa dùng thuật toán RSA và file output chứa nhiều ciphertext dưới dạng số + số mũ e và số mô đun N dùng trong mã hóa RSA.
 - Mục tiêu: Tìm flag từ các số N, e, c đã cho.
 - Kĩ thuật: **Hastad's Broadcast Attack**.
 
@@ -52,10 +52,17 @@ Về cơ bản, kĩ thuật tấn công này lợi dụng việc gửi 1 plainte
 
 Ban đầu mình nghĩ ngay cả hướng này cũng không đúng nên đã lục lọi thêm nhiều exploit khác nữa nhưng mà cũng không khả thi. Cuối cùng thì mình đã xem bài writeup [này](https://github.com/KranBoring/CTF-Solutions/blob/main/Others-Events/2026/W1n.game_Training/RSA/write-up.md) được gửi trên group Discord của CLB (fun fact: bài writeup này cũng là động lực thúc đẩy mình tự viết writeup riêng cho mình =)) thế nên mình cảm ơn bạn/anh/chị nhéee).
 
-Và đúng thật là trong bài writeup đã sử dụng hướng tấn công Hastad!! Nhưng mà kì lạ là người viết đã giải bằng cách _thử tất cả tổ hợp bộ 3 (n, e, c) từ 7 bộ_ trong file output.txt cho tới khi ra được flag, đồng nghĩa là có vài plaintext m _thực sự giống nhau_. Từ đó mình mới có giả thuyết mới: **trong 7 plaintext m được lấy ra từ _messages_, 3 trong số chúng là flag được lặp lại, còn lại là plaintext rác nhằm đánh lạc hướng**.
+Và đúng thật là trong bài writeup đã sử dụng hướng tấn công Hastad!! Nhưng mà kì lạ là người viết đã giải bằng cách _thử tất cả tổ hợp bộ 3 cặp (c, n) từ 7 cặp_ trong file output.txt cho tới khi ra được flag, đồng nghĩa là có vài plaintext m _thực sự giống nhau_. Người viết đã đưa ra 1 giả thuyết mình thấy khá là hợp lý: **trong 7 plaintext m được lấy ra từ _messages_, 3 trong số chúng là flag được lặp lại, còn lại là plaintext rác nhằm đánh lạc hướng**.
 
-Như vậy, giờ ta sẽ bắt đầu đào sâu vào cách mà Hastad's Broadcast Attack hoạt động (không thích dài dòng thì đi tới phần [lời giải](#solution) nha).
+Như vậy, giờ ta sẽ bắt đầu đào sâu hơn vào cách mà Hastad's Broadcast Attack hoạt động (không thích dài dòng thì đi tới phần [lời giải](#solution) nha).
+
+### 3. Hastad's Broadcast Attack
+Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: **nếu ta biết được các số dư (tức là c) từ các phép chia 1 số nguyên (tức là m<sup>3</sup>, số ta cần tìm) cho nhiều số nguyên khác nhau (số mô đun n), thì ta sẽ có thể tính được _số dư x của phép chia số m<sup>3</sup> cho tích các số mô đun n_ (mà không cần biết trước số m<sup>3</sup> là gì).**
+<div align="center"><img width="522" height="332" alt="image" src="https://github.com/user-attachments/assets/9fd8bb92-4ad6-4db4-8f8f-98d1c2104939" /></div>
+
+Nhưng mà ta cần tính m chứ đâu cần tính x chi đâu??
+
+**Trừ khi x cũng chính là m<sup>3</sup>**. Điều này xảy ra khi **m<sup>3</sup> < n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**, và điều kiện này gần như là luôn đúng với
 
 <a id="solution"></a>
-### 3. Lời giải
-#### 3.1. 
+### 4. Lời giải 
