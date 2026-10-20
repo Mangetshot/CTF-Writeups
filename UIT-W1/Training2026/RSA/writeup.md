@@ -50,4 +50,12 @@ Về cơ bản, kĩ thuật tấn công này lợi dụng việc gửi 1 plainte
 
 **Mà khoan**, để exploit này hoạt động thì _chỉ duy nhất 1 plaintext m_ được gửi nhiều lần. Chẳng phải điều này trái lại với giả thuyết mình đề ra rằng nhiều m khác nhau đã được đưa vô hàm RSA_ecnrypt() trong file output.txt sao??
 
-Ban đầu mình nghĩ ngay cả hướng này cũng không đúng nên đã lục lọi thêm nhiều exploit khác nữa nhưng mà cũng không khả thi. Cuối cùng thì mình đã xem bài writeup [này](https://github.com/KranBoring/CTF-Solutions/blob/main/Others-Events/2026/W1n.game_Training/RSA/write-up.md) được đăng trên group Discord của CLB, có vẻ là từ 1 thành viên của TeamT.
+Ban đầu mình nghĩ ngay cả hướng này cũng không đúng nên đã lục lọi thêm nhiều exploit khác nữa nhưng mà cũng không khả thi. Cuối cùng thì mình đã xem bài writeup [này](https://github.com/KranBoring/CTF-Solutions/blob/main/Others-Events/2026/W1n.game_Training/RSA/write-up.md) được gửi trên group Discord của CLB (fun fact: bài writeup này cũng là động lực thúc đẩy mình tự viết writeup riêng cho mình =)) thế nên mình cảm ơn bạn/anh/chị nhéee).
+
+Và đúng thật là trong bài writeup đã sử dụng hướng tấn công Hastad!! Nhưng mà kì lạ là người viết đã giải bằng cách _thử tất cả tổ hợp bộ 3 (n, e, c) từ 7 bộ_ trong file output.txt cho tới khi ra được flag, đồng nghĩa là có vài plaintext m _thực sự giống nhau_. Từ đó mình mới có giả thuyết mới: **trong 7 plaintext m được lấy ra từ _messages_, 3 trong số chúng là flag được lặp lại, còn lại là plaintext rác nhằm đánh lạc hướng**.
+
+Như vậy, giờ ta sẽ bắt đầu đào sâu vào cách mà Hastad's Broadcast Attack hoạt động (không thích dài dòng thì đi tới phần [lời giải](#solution) nha).
+
+<a id="solution"></a>
+### 3. Lời giải
+#### 3.1. 
