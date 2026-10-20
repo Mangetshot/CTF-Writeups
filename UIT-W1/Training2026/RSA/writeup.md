@@ -40,3 +40,5 @@ Sau khi thất bại, mình bắt đầu theo hướng exploit số mũ e nhỏ 
 Về cơ bản, kĩ thuật tấn công này lợi dụng việc gửi 1 plaintext nhiều lần, và với mỗi cặp (c, n) mới sẽ moi thêm thông tin về plaintext gốc:
 - Giả sử Alice gửi cùng 1 tin nhắn cho nhiều người khác nhau sử dụng RSA. Alice chỉ chọn đúng 1 số mũ e nhỏ nhưng vẫn chọn các số mô-đun n khác nhau để cho ra các ciphertext c khác nhau cho từng lần gửi.
 - **Nếu e đủ nhỏ**, Eve muốn tìm ra tin nhắn ban đầu thì chỉ cần biết **ít nhất e cặp (c, n)** mà không cần đến private key.
+  <div align="center"><img width="496" height="334" alt="image" src="https://github.com/user-attachments/assets/dab48259-3112-4bf1-bd58-b6f9855c0c70" /></div>
+
