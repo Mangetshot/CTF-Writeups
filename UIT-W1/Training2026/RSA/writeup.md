@@ -61,13 +61,16 @@ Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng d�
 <div align="center"><img width="1218" height="355" alt="image" src="https://github.com/user-attachments/assets/5b82bbe1-375e-473f-a835-8e2f760a05c9" /></div>
 
 Mấu chốt ở đây là **đôi một nguyên tố cùng nhau (pairwise-coprime)** và **có nghiệm duy nhất mô đun tích các số mô đun**:
-- Hai số a, b là nguyên tố cùng nhau khi ƯCLN(a, b) = 1.
+- Hai số a, b là nguyên tố cùng nhau khi **ƯCLN(a, b) = 1**.
 
-`VD: 6 và 7 nguyên tố cùng nhau do ƯCLN(6, 7) = 1; 6 và 8 không nguyên tố cùng nhau do ƯCLN(6, 8) = 2` 
+_VD: 6 và 7 nguyên tố cùng nhau do ƯCLN(6, 7) = 1; 6 và 8 không nguyên tố cùng nhau do ƯCLN(6, 8) = 2._
 
-- Một hệ đồng dư 'có nghiệm duy nhất mô đun N' tức là hệ đó chỉ có duy nhất 1 tập hợp các nghiệm đồng dư với nhau qua mô đun N (chứ không phải chỉ có 1 nghiệm!!). Tập hợp nghiệm đó được gọi là lớp đồng dư (congruence class), và để cho ngắn gọn thì được đại diện chỉ bởi 1 nghiệm trong khoảng (0, N).
-- 
-`VD: x 
+- Một hệ đồng dư "có nghiệm duy nhất mô đun tích các số mô đun N" tức là hệ đó chỉ có **duy nhất 1 tập hợp chứa các nghiệm đồng dư với nhau qua N** (chứ không phải chỉ có 1 nghiệm!!). Tập hợp nghiệm đó được gọi là lớp đồng dư (congruence class), và để cho ngắn gọn thì được đại diện **chỉ bởi 1 nghiệm trong khoảng (0, N)**.
+
+_VD: Hệ x_ $\equiv$ _2 (mod 3) và x_ $\equiv$ _3 (mod 5) có tập nghiệm là {8; 23; 38;...} với chu kì của tập nghiệm là 3 x 5 = 15, nhưng sẽ lấy x_ $\equiv$ _8 (mod 15) làm đại diện cho nghiệm của hệ._
+
+Về bản chất, CRT được sinh ra là để đảm bảo cho các hệ đồng dư mà thỏa điều kiện về tính coprime thì chắc chắn có nghiệm đặc biệt nêu trên.
+
 
 <div align="center"><img width="522" height="332" alt="image" src="https://github.com/user-attachments/assets/9fd8bb92-4ad6-4db4-8f8f-98d1c2104939" /></div>
 
@@ -124,7 +127,3 @@ Sau khi xét hết điều kiện và chứng minh _x = m<sup>3</sup>_ thì ti�
 
 <a id="solution"></a>
 ### 4. Lời giải 
-
-$$
-x^2 + y^2 = z^2
-$$
