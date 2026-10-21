@@ -5,10 +5,12 @@ Ban đầu không biết độ khó nên mình làm bài này trước cả bài
 
 Các bạn nên xem qua [cách thuật toán RSA mã hóa](https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/), và căn bản về [số học mô đun](https://www.geeksforgeeks.org/engineering-mathematics/modular-arithmetic/) để hiểu rõ hơn về bài này.
 
+
 ### 1. Tổng quan
 - Có 2 file: script mã hóa dùng thuật toán RSA và file output chứa nhiều ciphertext dưới dạng số + số mũ e và số mô đun N dùng trong mã hóa RSA.
 - Mục tiêu: Tìm flag từ các số N, e, c đã cho.
 - Kĩ thuật: **Hastad's Broadcast Attack**.
+
 
 ### 2. Quan sát ban đầu
 Nhìn sơ qua script, quá trình mã hóa tương tự như RSA:
@@ -56,6 +58,7 @@ Và đúng thật là trong bài writeup đã sử dụng hướng tấn công H
 
 Như vậy, giờ ta sẽ bắt đầu đào sâu hơn vào cách mà Hastad's Broadcast Attack hoạt động (ai chỉ thích áp dụng liền vào script thì đi tới phần [lời giải](#solution) nha).
 
+
 ### 3. Hastad's Broadcast Attack
 Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem hay CRT)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: 
 <div align="center"><img width="1218" height="355" alt="image" src="https://github.com/user-attachments/assets/5b82bbe1-375e-473f-a835-8e2f760a05c9" /></div>
@@ -65,20 +68,30 @@ Mấu chốt ở đây là **đôi một nguyên tố cùng nhau (pairwise-copri
 
 _VD: 6 và 7 nguyên tố cùng nhau do ƯCLN(6, 7) = 1; 6 và 8 không nguyên tố cùng nhau do ƯCLN(6, 8) = 2._
 
-- Một hệ đồng dư "có nghiệm duy nhất mô đun tích các số mô đun N" tức là hệ đó chỉ có **duy nhất 1 tập hợp chứa các nghiệm đồng dư với nhau qua N** (chứ không phải chỉ có 1 nghiệm!!). Tập hợp nghiệm đó được gọi là lớp đồng dư (congruence class), và để cho ngắn gọn thì được đại diện **chỉ bởi 1 nghiệm trong khoảng (0, N)**.
+- Một hệ đồng dư "có nghiệm duy nhất mô đun tích các số mô đun N" tức là hệ đó chỉ có **duy nhất 1 tập hợp chứa các nghiệm đồng dư với nhau qua N** (chứ không phải chỉ có 1 nghiệm!!). Tập hợp nghiệm đó được gọi là lớp đồng dư (congruence class), và để cho ngắn gọn thì được đại diện **chỉ bởi 1 nghiệm trong khoảng (0, N)** _(đây cũng chính là giá trị mà ta sẽ tạo thuật toán để tìm)_.
 
 _VD: Hệ x_ $\equiv$ _2 (mod 3) và x_ $\equiv$ _3 (mod 5) có tập nghiệm là {8; 23; 38;...} với chu kì của tập nghiệm là 3 x 5 = 15, nhưng sẽ lấy x_ $\equiv$ _8 (mod 15) làm đại diện cho nghiệm của hệ._
 
 Về bản chất, CRT được sinh ra là để đảm bảo cho các hệ đồng dư mà thỏa điều kiện về tính coprime thì chắc chắn có nghiệm đặc biệt nêu trên.
 
+<div align="center"><img width="805" height="347" alt="image" src="https://github.com/user-attachments/assets/abc59183-3660-4ef6-9fca-ce2faf49a627" /></div>
 
-<div align="center"><img width="522" height="332" alt="image" src="https://github.com/user-attachments/assets/9fd8bb92-4ad6-4db4-8f8f-98d1c2104939" /></div>
+<div align="center"><img width="761" height="332" alt="image" src="https://github.com/user-attachments/assets/a046169d-7bbe-49cd-bad5-e6522ccb952c" /></div>
 
-Nhưng mà ta cần tính m chứ đâu cần tính x chi đâu??
+<div align="center"><img width="729" height="356" alt="image" src="https://github.com/user-attachments/assets/1d3cf471-a0f4-4df0-9c03-e88dfb46b860" /></div>
+<div align="center">Mình lười minh họa nên copy GPT qua nhé =))</div>
 
-**Trừ khi x cũng chính là m<sup>3</sup>!!**. Điều này xảy ra khi **m<sup>3</sup> < n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Điều kiện này gần như là luôn đúng đối với thuật toán RSA thông thường, trong đó độ lớn plaintext m (khi đã chuyển về integer) được đảm bào nhỏ hơn số mô đun n cho quá trình mã hóa và giải mã.
+Quay lại bài toán gốc, ta cũng không khác gì đang giải một hệ đồng dư:
 
-Thật ra để áp dụng CRT thì vẫn cần một điều kiện quan trọng nữa: **cả 3 số mô đun n<sub>0</sub>, n<sub>1</sub>, n<sub>2</sub> phải [đôi một nguyên tố cùng nhau (pairwise-coprime)](https://vi.wikipedia.org/wiki/S%E1%BB%91_nguy%C3%AAn_t%E1%BB%91_c%C3%B9ng_nhau)**. Hiểu đơn giản là không được chọn trùng lặp các số SNT để cấu thành nên các số mô đun n khác nhau. Để kiểm tra thì mình đã lần lượt bỏ 2 trong 7 số mô đun vào hàm gcd() mà mình tự code để tìm ra ƯCLN (Nếu điều kiện không thỏa thì đây sẽ càng là một lỗ hổng nghiêm trọng mà ta có thể exploit).
+<div align="center"><img width="1045" height="208" alt="image" src="https://github.com/user-attachments/assets/de87efa0-74b1-4f58-a26b-1d21df263adc" /></div>
+
+Ở đây ta cần tìm x là _giá trị đại diện_ cho tập nghiệm của hệ đồng dư trên. Tuy vậy, như nãy mình đã nói thì x đại diện cho vô số nghiệm nên việc tính x cũng chẳng thể nào mà xác định được một giá trị cụ thể của m<sup>3</sup>...
+ 
+...**Trừ khi x cũng chính là m<sup>3</sup>!!** Điều này xảy ra khi **m<sup>3</sup> < n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Điều kiện này gần như là luôn đúng đối với thuật toán RSA thông thường, trong đó độ lớn plaintext m (khi đã chuyển về integer) được đảm bào _nhỏ hơn số mô đun n_ cho quá trình mã hóa và giải mã (Từ đây cũng giải thích tại sao lại có yêu cầu cần _ít nhất e cặp (c, n)_ để exploit này khả thi) 
+
+<div align="center"><img width="680" height="424" alt="image" src="https://github.com/user-attachments/assets/add6164c-3b80-4ac0-85ca-ace280dd4025" /></div>
+
+Sau khi đã chứng minh x = m<sup>3</sup>, ta cần xét điều kiện về tính coprime của từng cặp số mô đun mà exploit yêu cầu. Để kiểm tra thì mình đã lần lượt bỏ 2 trong 7 số mô đun từ file output.txt vào hàm gcd() mà mình tự code để tìm ra ƯCLN (Nếu điều kiện không thỏa thì đây sẽ càng là một lỗ hổng nghiêm trọng mà ta có thể dùng exploit liên quan đến Prime Factorization):
 
 ```
 n_list = []
@@ -114,16 +127,18 @@ for i in range(n_len-1):
         if res != 1:
             print(f"Moduli {i} and {j} have a common factor: {res}")
 ```
+
 Khi chạy thì terminal không in ra gì cả, nghĩa là điều kiện đã được thỏa.
 
-Sau khi xét hết điều kiện và chứng minh _x = m<sup>3</sup>_ thì tiếp đến là bước quan trọng nhất: **Làm như thế nào để tính x??**
+Khi đã xét hết điều kiện thì tiếp đến là bước quan trọng nhất: **Làm như thế nào để tính x??**
 
-Ở đây ta sẽ trải qua vài bước tính toán dù code không khó nhưng mới nhìn qua chắc chắn sẽ khó mà hiểu một cách trực quan được:
+Ở đây ta sẽ trải qua vài bước tính toán, dù code không khó nhưng mới nhìn qua chắc chắn sẽ khó mà hiểu một cách trực quan được:
 1. Đặt **N = n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Lần luợt tính: **N<sub>i</sub> = N / n<sub>i</sub>**
 2. Lần lượt tính [nghịch đảo nhân (Modular Multiplicative Inverse)](https://nhannguyen95.wordpress.com/2017/03/16/modular-multiplicative-inverse-tinh-nghich-dao-theo-phep-nhan-modulo/), đặt là _u<sub>i</sub>_, của từng N<sub>i</sub> theo mô đun n<sub>i</sub>. Nghĩa là tính _u<sub>i</sub>_ sao cho:
 **<div align="center">u<sub>i</sub>N<sub>i</sub> mod n<sub>i</sub> = 1</div>**
 3. Tính tổng **S = c<sub>1</sub>N<sub>1</sub>u<sub>1</sub> + c<sub>2</sub>N<sub>2</sub>u<sub>2</sub> + c<sub>3</sub>N<sub>3</sub>u<sub>3</sub>**
 4. Cuối cùng, tính **x = S mod N**
+
 
 <a id="solution"></a>
 ### 4. Lời giải 
