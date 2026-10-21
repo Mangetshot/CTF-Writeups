@@ -38,26 +38,37 @@ Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tư�
 
 <img width="1779" height="190" alt="image" src="https://github.com/user-attachments/assets/cad02b3a-ea56-42de-9832-dfabc4b86680" />
 
-...và cả 7 kết quả đều ra căn 3 không hoàn thiện T-T. Từ đó ta có thể kết luận rằng **m<sup>e</sup> > n với mọi n**.
+...và cả 7 kết quả đều ra căn 3 xấu T-T. Từ đó ta có thể kết luận rằng **m<sup>e</sup> > n với mọi n**.
 
 Sau khi thất bại, mình bắt đầu theo hướng exploit số mũ e nhỏ được dùng nhiều lần. Mình tra cứu một lúc thì tìm ra **Hastad's Broadcast Attack**.
 
 Về cơ bản, kĩ thuật tấn công này lợi dụng việc gửi 1 plaintext nhiều lần, và với mỗi cặp (c, n) mới sẽ moi thêm thông tin về plaintext gốc:
-- Giả sử Alice gửi cùng 1 tin nhắn cho nhiều người khác nhau sử dụng RSA. Alice chỉ chọn đúng 1 số mũ e nhỏ nhưng vẫn chọn các số mô-đun n khác nhau để cho ra các ciphertext c khác nhau cho từng lần gửi.
+- Giả sử Alice gửi cùng 1 tin nhắn cho nhiều người khác nhau sử dụng RSA. Alice chỉ chọn đúng 1 số mũ e nhỏ nhưng vẫn chọn các số mô đun n khác nhau để cho ra các ciphertext c khác nhau cho từng lần gửi.
 - **Nếu e đủ nhỏ**, Eve muốn tìm ra tin nhắn ban đầu thì chỉ cần biết **ít nhất e cặp (c, n)** mà không cần đến private key.
 
   <div align="center"><img width="744" height="501" alt="image" src="https://github.com/user-attachments/assets/dab48259-3112-4bf1-bd58-b6f9855c0c70" /></div>
 
-**Mà khoan**, để exploit này hoạt động thì _chỉ duy nhất 1 plaintext m_ được gửi nhiều lần. Chẳng phải điều này trái lại với giả thuyết mình đề ra rằng nhiều m khác nhau đã được đưa vô hàm RSA_ecnrypt() trong file output.txt sao??
+**Mà khoan**, để dùng được exploit thì _chỉ duy nhất 1 plaintext m_ được gửi nhiều lần. Chẳng phải điều này trái lại với giả thuyết mình đề ra rằng nhiều m khác nhau đã được đưa vô hàm RSA_ecnrypt() trong file output.txt sao??
 
 Ban đầu mình nghĩ ngay cả hướng này cũng không đúng nên đã lục lọi thêm nhiều exploit khác nữa nhưng mà cũng không khả thi. Cuối cùng thì mình đã xem bài writeup [này](https://github.com/KranBoring/CTF-Solutions/blob/main/Others-Events/2026/W1n.game_Training/RSA/write-up.md) được gửi trên group Discord của CLB (fun fact: bài writeup này cũng là động lực thúc đẩy mình tự viết writeup riêng cho mình =)) thế nên mình cảm ơn bạn/anh/chị nhéee).
 
 Và đúng thật là trong bài writeup đã sử dụng hướng tấn công Hastad!! Nhưng mà kì lạ là người viết đã giải bằng cách _thử tất cả tổ hợp bộ 3 cặp (c, n) từ 7 cặp_ trong file output.txt cho tới khi ra được flag, đồng nghĩa là có vài plaintext m _thực sự giống nhau_. Người viết đã đưa ra 1 giả thuyết mình thấy khá là hợp lý: **trong 7 plaintext m được lấy ra từ _messages_, 3 trong số chúng là flag được lặp lại, còn lại là plaintext rác nhằm đánh lạc hướng**.
 
-Như vậy, giờ ta sẽ bắt đầu đào sâu hơn vào cách mà Hastad's Broadcast Attack hoạt động (không thích dài dòng thì đi tới phần [lời giải](#solution) nha).
+Như vậy, giờ ta sẽ bắt đầu đào sâu hơn vào cách mà Hastad's Broadcast Attack hoạt động (ai chỉ thích áp dụng liền vào script thì đi tới phần [lời giải](#solution) nha).
 
 ### 3. Hastad's Broadcast Attack
-Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem hay CRT)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: ****
+Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem hay CRT)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: 
+<div align="center"><img width="1218" height="355" alt="image" src="https://github.com/user-attachments/assets/5b82bbe1-375e-473f-a835-8e2f760a05c9" /></div>
+
+Mấu chốt ở đây là **đôi một nguyên tố cùng nhau (pairwise-coprime)** và **có nghiệm duy nhất mô đun tích các số mô đun**:
+- Hai số a, b là nguyên tố cùng nhau khi ƯCLN(a, b) = 1.
+
+`VD: 6 và 7 nguyên tố cùng nhau do ƯCLN(6, 7) = 1; 6 và 8 không nguyên tố cùng nhau do ƯCLN(6, 8) = 2` 
+
+- Một hệ đồng dư 'có nghiệm duy nhất mô đun N' tức là hệ đó chỉ có duy nhất 1 tập hợp các nghiệm đồng dư với nhau qua mô đun N (chứ không phải chỉ có 1 nghiệm!!). Tập hợp nghiệm đó được gọi là lớp đồng dư (congruence class), và để cho ngắn gọn thì được đại diện chỉ bởi 1 nghiệm trong khoảng (0, N).
+- 
+`VD: x 
+
 <div align="center"><img width="522" height="332" alt="image" src="https://github.com/user-attachments/assets/9fd8bb92-4ad6-4db4-8f8f-98d1c2104939" /></div>
 
 Nhưng mà ta cần tính m chứ đâu cần tính x chi đâu??
@@ -113,3 +124,7 @@ Sau khi xét hết điều kiện và chứng minh _x = m<sup>3</sup>_ thì ti�
 
 <a id="solution"></a>
 ### 4. Lời giải 
+
+$$
+x^2 + y^2 = z^2
+$$
