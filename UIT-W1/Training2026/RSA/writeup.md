@@ -88,7 +88,7 @@ with open('output_0ef6d6343784e59e2f44f61d2d29896f.txt', 'r') as f: #Thu thập 
             c_list.append(c)
             n, c = 0, 0
 
-def gcd(a: int, b: int) -> int:
+def gcd(a: int, b: int) -> int: #Xem thuật toán Euclid để hiểu rõ hon
     while b != 0:
         a, b = b, a % b
     return a
@@ -102,9 +102,14 @@ for i in range(n_len-1):
 ```
 Khi chạy thì terminal không in ra gì cả, nghĩa là điều kiện đã được thỏa.
 
-Tiếp đến là bước quan trọng nhất: **Làm như thế nào để tính x??**
+Sau khi xét hết điều kiện và chứng minh _x = m<sup>3</sup>_ thì tiếp đến là bước quan trọng nhất: **Làm như thế nào để tính x??**
 
-
+Ở đây ta sẽ trải qua vài bước tính toán dù code không khó nhưng mới nhìn qua chắc chắn sẽ khó mà hiểu một cách trực quan được:
+1. Đặt **N = n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Lần luợt tính: **N<sub>i</sub> = N / n<sub>i</sub>**
+2. Lần lượt tính [nghịch đảo nhân (Modular Multiplicative Inverse)](https://nhannguyen95.wordpress.com/2017/03/16/modular-multiplicative-inverse-tinh-nghich-dao-theo-phep-nhan-modulo/), đặt là _u<sub>i</sub>_, của từng N<sub>i</sub> theo mô đun n<sub>i</sub>. Nghĩa là tính _u<sub>i</sub>_ sao cho:
+**<div align="center">u<sub>i</sub>N<sub>i</sub> mod n<sub>i</sub> = 1</div>**
+3. Tính tổng **S = c<sub>1</sub>N<sub>1</sub>u<sub>1</sub> + c<sub>2</sub>N<sub>2</sub>u<sub>2</sub> + c<sub>3</sub>N<sub>3</sub>u<sub>3</sub>**
+4. Cuối cùng, tính **x = S mod N**
 
 <a id="solution"></a>
 ### 4. Lời giải 
