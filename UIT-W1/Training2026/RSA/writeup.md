@@ -34,7 +34,7 @@ Nhìn sang file output.txt, ta thấy tổng cộng có 7 bộ ba (n, e, c) tư�
 
 <img width="1919" height="847" alt="image" src="https://github.com/user-attachments/assets/60be2d46-b3fe-45bc-9cd8-2615b4c53472" />
 
-Điều đầu tiên mình làm là thử tính căn bậc e (= 3) của từng c: **trong vài trường hợp, m<sup>e</sup> < n => c = m<sup>e</sup> (mod n) = m<sup>e</sup>**. Từ đó, chỉ cần lấy căn 3 của c là sẽ ra lại m...
+Điều đầu tiên mình làm là thử tính căn bậc e (= 3) của từng c: **trong vài trường hợp, m<sup>e</sup> < n => c = m<sup>e</sup> mod n = m<sup>e</sup>**. Từ đó, chỉ cần lấy căn 3 của c là sẽ ra lại m...
 
 <img width="1779" height="190" alt="image" src="https://github.com/user-attachments/assets/cad02b3a-ea56-42de-9832-dfabc4b86680" />
 
@@ -57,7 +57,7 @@ Và đúng thật là trong bài writeup đã sử dụng hướng tấn công H
 Như vậy, giờ ta sẽ bắt đầu đào sâu hơn vào cách mà Hastad's Broadcast Attack hoạt động (không thích dài dòng thì đi tới phần [lời giải](#solution) nha).
 
 ### 3. Hastad's Broadcast Attack
-Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem hay CRT)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: **nếu ta biết được các số dư (tức là c) từ các phép chia 1 số nguyên (tức là m<sup>3</sup>, số ta cần tìm) cho nhiều số nguyên khác nhau (số mô đun n), thì ta sẽ có thể tính được _số dư x của phép chia số m<sup>3</sup> cho tích các số mô đun n_ (mà không cần biết trước số m<sup>3</sup> là gì).**
+Kĩ thuật tấn công này có nguyên lí dựa trên [Định lí Thặng dư Trung Hoa (Chinese Remainder Theorem hay CRT)](https://www.scribd.com/document/892783382/%C4%90%E1%BB%8Bnh-L%C3%BD-Th%E1%BA%B7ng-D%C6%B0-Trung-Hoa). Định lý về căn bản phát biểu như sau: ****
 <div align="center"><img width="522" height="332" alt="image" src="https://github.com/user-attachments/assets/9fd8bb92-4ad6-4db4-8f8f-98d1c2104939" /></div>
 
 Nhưng mà ta cần tính m chứ đâu cần tính x chi đâu??
