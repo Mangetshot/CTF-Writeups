@@ -149,5 +149,15 @@ Như vậy ta cần tìm cách triệt tiêu thằng c<sub>1</sub> và c<sub>2</
 
 <div align="center"><img width="619" height="402" alt="image" src="https://github.com/user-attachments/assets/0964c4d9-6159-447c-be46-230d1d6d9e1d" /></div>
 
+Tuy nhiên, một vấn đề khác lại nảy sinh ra: lúc này thì N<sub>i</sub>c<sub>i</sub> lại **không đồng dư** với c<sub>i</sub> (mod n<sub>i</sub>) T-T
+
+Vậy thì ta cần phải nhân thêm một hệ số đặc biệt nữa để sự đồng dư xảy ra: **nghịch đảo nhân u<sub>i</sub> của N<sub>i</sub> mod n<sub>i</sub>**. 
+
+<div align="center"><img width="743" height="546" alt="image" src="https://github.com/user-attachments/assets/c102d3bb-4f7e-477c-8f1c-2daa89b41e8f" /></div>
+
+Và ta cũng đã tính được một nghiệm của hệ là x!! Đừng quên ta cần thêm một bước nữa là tính giá trị đại diện **a = x mod N** để a nằm trong khoảng (0, N). Như đã chứng minh, ta tìm được giá trị **m<sup>3</sup> = a**.
+
+CUỐI CÙNG, lấy căn 3 của m<sup>3</sup> là ra m, và chuyển nó về từ integer thành bytes là sẽ ra plaintext :)
+
 <a id="solution"></a>
 ### 4. Lời giải 
