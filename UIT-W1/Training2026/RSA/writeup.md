@@ -143,5 +143,9 @@ Trước tiên, mục tiêu của ta đang là **tìm một số x là nghiệm 
 
 <div align="center"><img width="798" height="399" alt="image" src="https://github.com/user-attachments/assets/1ccd2fb6-86c8-4168-a718-e5ad11efd4fd" /></div>
 
+Như vậy ta cần tìm cách triệu tiêu thằng c<sub>1</sub> và c<sub>2</sub> để **c<sub>0</sub> + c<sub>1</sub> + c<sub>2</sub> $\equiv$ n<sub>0</sub> (mod n<sub>0</sub>)** rút gọn lại thành **c<sub>0</sub>  $\equiv$ c<sub>0</sub> (mod n<sub>0</sub>)**. Dễ thấy, chỉ cần nhân n<sub>0</sub> vào c<sub>1</sub> và c<sub>2</sub> thì **2 cụm n<sub>0</sub>c<sub>1</sub> và n<sub>0</sub>c<sub>2</sub> sẽ chia hết cho số mô đun n<sub>0</sub>**, từ đó bị triêt tiêu ngay lập tức. 
+
+Đương nhiên đây chỉ mới là một phương trình nên ta cần tổng quát như sau: mỗi **c<sub>i</sub>** tương ứng với một **n<sub>i</sub>** thì cần nhân thêm hệ số **N<sub>i</sub> = N / n<sub>i</sub>**. Khi đó
+
 <a id="solution"></a>
 ### 4. Lời giải 
