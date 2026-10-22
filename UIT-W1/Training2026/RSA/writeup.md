@@ -68,11 +68,11 @@ Mấu chốt ở đây là **đôi một nguyên tố cùng nhau (pairwise-copri
 
 _VD: 6 và 7 nguyên tố cùng nhau do ƯCLN(6, 7) = 1; 6 và 8 không nguyên tố cùng nhau do ƯCLN(6, 8) = 2._
 
-- Một hệ đồng dư "có nghiệm duy nhất mô đun tích các số mô đun N" tức là hệ đó chỉ có **duy nhất 1 tập hợp chứa các nghiệm đồng dư với nhau qua N** (chứ không phải chỉ có 1 nghiệm!!). Tập hợp nghiệm đó được gọi là lớp đồng dư (congruence class), và để cho ngắn gọn thì được đại diện **chỉ bởi 1 nghiệm trong khoảng (0, N)** _(đây cũng chính là giá trị mà ta sẽ tạo thuật toán để tìm)_.
+- Một hệ đồng dư "có nghiệm duy nhất mô đun tích các số mô đun N" tức là hệ đó chỉ có **duy nhất 1 tập hợp chứa các nghiệm đồng dư với nhau qua N** (chứ không phải chỉ có 1 nghiệm!!). Tập hợp nghiệm đó được gọi là lớp đồng dư (congruence class), và để cho ngắn gọn thì được đại diện bởi **x $\equiv$ a (mod N)**, với giá trị đại diện _a_ là **một nghiệm của hệ trong khoảng (0, N)** (đây cũng chính là giá trị mà ta sẽ tạo thuật toán để tìm).
 
-_VD: Hệ x_ $\equiv$ _2 (mod 3) và x_ $\equiv$ _3 (mod 5) có tập nghiệm là {8; 23; 38;...} với chu kì của tập nghiệm là 3 x 5 = 15, nhưng sẽ lấy x_ $\equiv$ _8 (mod 15) làm đại diện cho nghiệm của hệ._
+_VD: Hệ x_ $\equiv$ _2 (mod 3) và x_ $\equiv$ _3 (mod 5) có tập nghiệm là {8; 23; 38;...} với chu kì của tập nghiệm là 3 x 5 = 15, nhưng sẽ lấy a = 8 trong khoảng (0, 15) làm giá trị đại diện, và x_ $\equiv$ _8 (mod 15) là đại diện cho tập nghiệm của hệ._
 
-Về bản chất, CRT được sinh ra là để đảm bảo cho các hệ đồng dư mà thỏa điều kiện về tính coprime thì chắc chắn có nghiệm đặc biệt nêu trên.
+Về bản chất, CRT được sinh ra là để đảm bảo cho các hệ đồng dư mà thỏa điều kiện về tính coprime thì chắc chắn có nghiệm đặc biệt nêu trên, thứ mà không phải hệ đồng dư nào cũng có.
 
 <div align="center"><img width="805" height="347" alt="image" src="https://github.com/user-attachments/assets/abc59183-3660-4ef6-9fca-ce2faf49a627" /></div>
 
@@ -83,15 +83,15 @@ Về bản chất, CRT được sinh ra là để đảm bảo cho các hệ đ�
 
 Quay lại bài toán gốc, ta cũng không khác gì đang giải một hệ đồng dư:
 
-<div align="center"><img width="1045" height="208" alt="image" src="https://github.com/user-attachments/assets/de87efa0-74b1-4f58-a26b-1d21df263adc" /></div>
+<div align="center"><img width="976" height="238" alt="image" src="https://github.com/user-attachments/assets/a2a3b0e8-fd51-4bad-9811-d9297c091e5a" /></div>
 
-Ở đây ta cần tìm x là _giá trị đại diện_ cho tập nghiệm của hệ đồng dư trên. Tuy vậy, như nãy mình đã nói thì x đại diện cho vô số nghiệm nên việc tính x cũng chẳng thể nào mà xác định được một giá trị cụ thể của m<sup>3</sup>...
+Ở đây ta cần tìm _giá trị đại diện a_ cho tập nghiệm của hệ đồng dư trên. Tuy vậy, như nãy mình đã nói thì có vô số nghiệm thỏa mãn hệ đồng dư nên việc tính a cũng chẳng thể nào mà xác định được một giá trị cụ thể của m<sup>3</sup>...
  
-...**Trừ khi x cũng chính là m<sup>3</sup>!!** Điều này xảy ra khi **m<sup>3</sup> < n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Điều kiện này gần như là luôn đúng đối với thuật toán RSA thông thường, trong đó độ lớn plaintext m (khi đã chuyển về integer) được đảm bào _nhỏ hơn số mô đun n_ cho quá trình mã hóa và giải mã (Từ đây cũng giải thích tại sao lại có yêu cầu cần _ít nhất e cặp (c, n)_ để exploit này khả thi) 
+...**Trừ khi m<sup>3</sup> cũng chính là a!!** Điều này xảy ra khi **m<sup>3</sup> < n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Điều kiện này gần như là luôn đúng đối với thuật toán RSA thông thường, trong đó độ lớn plaintext m (khi đã chuyển về integer) được đảm bào _nhỏ hơn số mô đun n_ cho quá trình mã hóa và giải mã (Từ đây cũng giải thích tại sao lại có yêu cầu cần _ít nhất e cặp (c, n)_ để exploit này khả thi).
 
 <div align="center"><img width="680" height="424" alt="image" src="https://github.com/user-attachments/assets/add6164c-3b80-4ac0-85ca-ace280dd4025" /></div>
 
-Sau khi đã chứng minh x = m<sup>3</sup>, ta cần xét điều kiện về tính coprime của từng cặp số mô đun mà exploit yêu cầu. Để kiểm tra thì mình đã lần lượt bỏ 2 trong 7 số mô đun từ file output.txt vào hàm gcd() mà mình tự code để tìm ra ƯCLN (Nếu điều kiện không thỏa thì đây sẽ càng là một lỗ hổng nghiêm trọng mà ta có thể dùng exploit liên quan đến Prime Factorization):
+Sau khi đã chứng minh a = m<sup>3</sup>, ta cần xét điều kiện về tính coprime của từng cặp số mô đun mà exploit yêu cầu. Để kiểm tra thì mình đã lần lượt bỏ 2 trong 7 số mô đun từ file output.txt vào hàm gcd() mà mình tự code để tìm ra ƯCLN (Nếu điều kiện không thỏa thì đây sẽ càng là một lỗ hổng nghiêm trọng mà ta có thể dùng exploit liên quan đến Prime Factorization):
 
 ```
 n_list = []
@@ -128,17 +128,20 @@ for i in range(n_len-1):
             print(f"Moduli {i} and {j} have a common factor: {res}")
 ```
 
-Khi chạy thì terminal không in ra gì cả, nghĩa là điều kiện đã được thỏa.
+Khi mình chạy thì terminal không in ra gì cả, nghĩa là điều kiện đã được thỏa.
 
-Khi đã xét hết điều kiện thì tiếp đến là bước quan trọng nhất: **Làm như thế nào để tính x??**
+Khi đã xét hết điều kiện thì tiếp đến là bước quan trọng nhất: **Làm như thế nào để tính a??**
 
 Ở đây ta sẽ trải qua vài bước tính toán, dù code không khó nhưng mới nhìn qua chắc chắn sẽ khó mà hiểu một cách trực quan được:
 1. Đặt **N = n<sub>0</sub>n<sub>1</sub>n<sub>2</sub>**. Lần luợt tính: **N<sub>i</sub> = N / n<sub>i</sub>**
 2. Lần lượt tính [nghịch đảo nhân (Modular Multiplicative Inverse)](https://nhannguyen95.wordpress.com/2017/03/16/modular-multiplicative-inverse-tinh-nghich-dao-theo-phep-nhan-modulo/), đặt là _u<sub>i</sub>_, của từng N<sub>i</sub> theo mô đun n<sub>i</sub>. Nghĩa là tính _u<sub>i</sub>_ sao cho:
 **<div align="center">u<sub>i</sub>N<sub>i</sub> mod n<sub>i</sub> = 1</div>**
-3. Tính tổng **S = c<sub>1</sub>N<sub>1</sub>u<sub>1</sub> + c<sub>2</sub>N<sub>2</sub>u<sub>2</sub> + c<sub>3</sub>N<sub>3</sub>u<sub>3</sub>**
-4. Cuối cùng, tính **x = S mod N**
+3. Tính nghiệm **x = c<sub>1</sub>N<sub>1</sub>u<sub>1</sub> + c<sub>2</sub>N<sub>2</sub>u<sub>2</sub> + c<sub>3</sub>N<sub>3</sub>u<sub>3</sub>**
+4. Cuối cùng, tính giá trị đại diện **a = x mod N**
 
+Trước tiên, mục tiêu của ta đang là **tìm một số x là nghiệm của từng phương trình đồng dư** nêu trên. Giờ ta thử xét riêng phương trình **x $\equiv$ c<sub>0</sub> (mod n<sub>0</sub>)**. Dễ thấy, một giá trị của x thỏa mãn là... _c<sub>0</sub>_ =)) Mỗi phương trình còn lại khi xét riêng cũng có _c<sub>1</sub>_ và _c<sub>2</sub>_ thỏa. Ban đầu theo cảm tính, mình đã cộng cả 3 lại để ra _x = c<sub>0</sub> + c<sub>1</sub> + c<sub>2</sub>_, nghĩ rằng giá trị này là nghiệm chung của cả hệ. Khi thử nghiệm thì dễ thấy tại sao đây là đáp án sai:
+
+<div align="center"><img width="798" height="399" alt="image" src="https://github.com/user-attachments/assets/1ccd2fb6-86c8-4168-a718-e5ad11efd4fd" /></div>
 
 <a id="solution"></a>
 ### 4. Lời giải 
