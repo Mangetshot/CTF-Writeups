@@ -163,3 +163,8 @@ CUỐI CÙNG, lấy căn 3 của m<sup>3</sup> là ra m, và chuyển nó về t
 ### 4. Lời giải 
 - Lần lượt lấy tổ hợp chập 3 của 7 cặp (n, c) từ file output.txt để đưa vào Hastad's Broadcast Attack và tính ra m.
 - Chuyển m từ int sang bytes để lấy lại plaintext cho tới khi nào ra được flag.
+- [Script](solution.py)
+```
+Flag retrieved: b'yes\n\n---\n\nJohan Hastad\nProfessor in Computer Science in the Theoretical Computer Science\nGroup at the School of Computer Science and Communication at KTH Royal Institute of Technology in Stockholm, Sweden.\n\ncrypto{1f_y0u_d0nt_p4d_y0u_4r3_Vuln3rabl3}'
+```
+### BÀI HỌC RÚT RA: CHỌN SỐ MŨ E CHO LỚN VÀO!!
