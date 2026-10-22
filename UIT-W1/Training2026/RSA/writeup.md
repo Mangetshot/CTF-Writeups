@@ -151,11 +151,9 @@ Như vậy ta cần tìm cách triệt tiêu thằng c<sub>1</sub> và c<sub>2</
 
 Tuy nhiên, một vấn đề khác lại nảy sinh ra: lúc này thì N<sub>i</sub>c<sub>i</sub> lại **không đồng dư** với c<sub>i</sub> (mod n<sub>i</sub>) T-T
 
-Vậy thì ta cần phải nhân thêm một hệ số đặc biệt nữa để sự đồng dư xảy ra: **nghịch đảo nhân u<sub>i</sub> của N<sub>i</sub> mod n<sub>i</sub>**. 
+Vậy thì ta cần phải nhân thêm một hệ số đặc biệt nữa để sự đồng dư xảy ra: **nghịch đảo nhân u<sub>i</sub> của N<sub>i</sub> mod n<sub>i</sub>**. Về cách tính u<sub>i</sub> thì ta dùng hàm **pow(N<sub>i</sub>, -1 , n<sub>i</sub>)** trong python nhé (ai muốn tự code cách tính luôn thì xem [Thuật toán Euclid mở rộng](https://nhannguyen95.wordpress.com/2017/03/16/modular-multiplicative-inverse-tinh-nghich-dao-theo-phep-nhan-modulo/#:~:text=2.%20S%E1%BB%AD%20d%E1%BB%A5ng,b/a\)%C2%B7x1)).
 
 <div align="center"><img width="743" height="546" alt="image" src="https://github.com/user-attachments/assets/c102d3bb-4f7e-477c-8f1c-2daa89b41e8f" /></div>
-
-Về cách tính u<sub>i</sub> thì ta dùng hàm **pow(N<sub>i</sub>, -1 , n<sub>i</sub>)** trong python nhé (ai muốn tự code cách tính luôn thì xem [Thuật toán Euclid mở rộng](https://nhannguyen95.wordpress.com/2017/03/16/modular-multiplicative-inverse-tinh-nghich-dao-theo-phep-nhan-modulo/#:~:text=2.%20S%E1%BB%AD%20d%E1%BB%A5ng,b/a\)%C2%B7x1)).
 
 Và ta cũng đã tính được một nghiệm của hệ là **x = u<sub>0</sub>N<sub>0</sub>c<sub>0</sub> + u<sub>1</sub>N<sub>1</sub>c<sub>1</sub> + u<sub>2</sub>N<sub>2</sub>c<sub>2</sub>**!! Đừng quên ta cần thêm một bước nữa là tính giá trị đại diện **a = x mod N** để a nằm trong khoảng (0, N). Như đã chứng minh, ta tìm được giá trị **m<sup>3</sup> = a**.
 
@@ -163,5 +161,5 @@ CUỐI CÙNG, lấy căn 3 của m<sup>3</sup> là ra m, và chuyển nó về t
 
 <a id="solution"></a>
 ### 4. Lời giải 
-- Lấy tổ hợp chập 3 của 7 cặp (n, c) từ file output.txt
-- 
+- Lần lượt lấy tổ hợp chập 3 của 7 cặp (n, c) từ file output.txt để đưa vào Hastad's Broadcast Attack và tính ra m.
+- Chuyển m từ int sang bytes để lấy lại plaintext cho tới khi nào ra được flag.
