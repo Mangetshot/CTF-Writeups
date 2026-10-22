@@ -143,7 +143,7 @@ Trước tiên, mục tiêu của ta đang là **tìm một số x là nghiệm 
 
 <div align="center"><img width="798" height="399" alt="image" src="https://github.com/user-attachments/assets/1ccd2fb6-86c8-4168-a718-e5ad11efd4fd" /></div>
 
-Như vậy ta cần tìm cách triệt tiêu thằng c<sub>1</sub> và c<sub>2</sub> để **c<sub>0</sub> + c<sub>1</sub> + c<sub>2</sub> $\equiv$ n<sub>0</sub> (mod n<sub>0</sub>)** rút gọn lại thành **c<sub>0</sub>  $\equiv$ c<sub>0</sub> (mod n<sub>0</sub>)**. Dễ thấy, chỉ cần nhân n<sub>0</sub> vào c<sub>1</sub> và c<sub>2</sub> thì **2 số hạng n<sub>0</sub>c<sub>1</sub> và n<sub>0</sub>c<sub>2</sub> sẽ chia hết cho số mô đun n<sub>0</sub>**, từ đó cả 2 bị triệt tiêu ngay lập tức. 
+Như vậy ta cần tìm cách triệt tiêu thằng c<sub>1</sub> và c<sub>2</sub> để **c<sub>0</sub> + c<sub>1</sub> + c<sub>2</sub> $\equiv$ c<sub>0</sub> (mod n<sub>0</sub>)** rút gọn lại thành **c<sub>0</sub>  $\equiv$ c<sub>0</sub> (mod n<sub>0</sub>)**. Dễ thấy, chỉ cần nhân n<sub>0</sub> vào c<sub>1</sub> và c<sub>2</sub> thì **2 số hạng n<sub>0</sub>c<sub>1</sub> và n<sub>0</sub>c<sub>2</sub> sẽ chia hết cho số mô đun n<sub>0</sub>**, từ đó cả 2 bị triệt tiêu ngay lập tức. 
 
 Đương nhiên đây chỉ mới là một phương trình của hệ nên ta cần tổng quát như sau: mỗi **c<sub>i</sub>** tương ứng với một **n<sub>i</sub>** thì cần nhân thêm hệ số **N<sub>i</sub> = N / n<sub>i</sub>**. Khi đó, số hạng **c<sub>i</sub>N<sub>i</sub> sẽ bị triệt tiêu** khi mod các số mô đun còn lại **ngoại trừ số mô đun n<sub>i</sub> tương ứng của nó**.
 
@@ -155,9 +155,13 @@ Vậy thì ta cần phải nhân thêm một hệ số đặc biệt nữa để
 
 <div align="center"><img width="743" height="546" alt="image" src="https://github.com/user-attachments/assets/c102d3bb-4f7e-477c-8f1c-2daa89b41e8f" /></div>
 
-Và ta cũng đã tính được một nghiệm của hệ là x!! Đừng quên ta cần thêm một bước nữa là tính giá trị đại diện **a = x mod N** để a nằm trong khoảng (0, N). Như đã chứng minh, ta tìm được giá trị **m<sup>3</sup> = a**.
+Về cách tính u<sub>i</sub> thì ta dùng hàm **pow(N<sub>i</sub>, -1 , n<sub>i</sub>)** trong python nhé (ai muốn tự code cách tính luôn thì xem [Thuật toán Euclid mở rộng](https://nhannguyen95.wordpress.com/2017/03/16/modular-multiplicative-inverse-tinh-nghich-dao-theo-phep-nhan-modulo/#:~:text=2.%20S%E1%BB%AD%20d%E1%BB%A5ng,b/a\)%C2%B7x1)).
+
+Và ta cũng đã tính được một nghiệm của hệ là **x = u<sub>0</sub>N<sub>0</sub>c<sub>0</sub> + u<sub>1</sub>N<sub>1</sub>c<sub>1</sub> + u<sub>2</sub>N<sub>2</sub>c<sub>2</sub>**!! Đừng quên ta cần thêm một bước nữa là tính giá trị đại diện **a = x mod N** để a nằm trong khoảng (0, N). Như đã chứng minh, ta tìm được giá trị **m<sup>3</sup> = a**.
 
 CUỐI CÙNG, lấy căn 3 của m<sup>3</sup> là ra m, và chuyển nó về từ integer thành bytes là sẽ ra plaintext :)
 
 <a id="solution"></a>
 ### 4. Lời giải 
+- Lấy tổ hợp chập 3 của 7 cặp (n, c) từ file output.txt
+- 
