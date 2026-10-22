@@ -91,7 +91,7 @@ Quay lại bài toán gốc, ta cũng không khác gì đang giải một hệ �
 
 <div align="center"><img width="680" height="424" alt="image" src="https://github.com/user-attachments/assets/add6164c-3b80-4ac0-85ca-ace280dd4025" /></div>
 
-Sau khi đã chứng minh a = m<sup>3</sup>, ta cần xét điều kiện về tính coprime của từng cặp số mô đun mà exploit yêu cầu. Để kiểm tra thì mình đã lần lượt bỏ 2 trong 7 số mô đun từ file output.txt vào hàm gcd() mà mình tự code để tìm ra ƯCLN (Nếu điều kiện không thỏa thì đây sẽ càng là một lỗ hổng nghiêm trọng mà ta có thể dùng exploit liên quan đến Prime Factorization):
+Sau khi đã chứng minh **a = m<sup>3</sup>**, ta cần xét điều kiện về tính coprime của từng cặp số mô đun mà exploit yêu cầu. Để kiểm tra thì mình đã lần lượt bỏ 2 trong 7 số mô đun từ file output.txt vào hàm gcd() mà mình tự code để tìm ra ƯCLN (Nếu điều kiện không thỏa thì đây sẽ càng là một lỗ hổng nghiêm trọng mà ta có thể dùng exploit liên quan đến Prime Factorization):
 
 ```
 n_list = []
@@ -143,9 +143,11 @@ Trước tiên, mục tiêu của ta đang là **tìm một số x là nghiệm 
 
 <div align="center"><img width="798" height="399" alt="image" src="https://github.com/user-attachments/assets/1ccd2fb6-86c8-4168-a718-e5ad11efd4fd" /></div>
 
-Như vậy ta cần tìm cách triệu tiêu thằng c<sub>1</sub> và c<sub>2</sub> để **c<sub>0</sub> + c<sub>1</sub> + c<sub>2</sub> $\equiv$ n<sub>0</sub> (mod n<sub>0</sub>)** rút gọn lại thành **c<sub>0</sub>  $\equiv$ c<sub>0</sub> (mod n<sub>0</sub>)**. Dễ thấy, chỉ cần nhân n<sub>0</sub> vào c<sub>1</sub> và c<sub>2</sub> thì **2 cụm n<sub>0</sub>c<sub>1</sub> và n<sub>0</sub>c<sub>2</sub> sẽ chia hết cho số mô đun n<sub>0</sub>**, từ đó bị triêt tiêu ngay lập tức. 
+Như vậy ta cần tìm cách triệt tiêu thằng c<sub>1</sub> và c<sub>2</sub> để **c<sub>0</sub> + c<sub>1</sub> + c<sub>2</sub> $\equiv$ n<sub>0</sub> (mod n<sub>0</sub>)** rút gọn lại thành **c<sub>0</sub>  $\equiv$ c<sub>0</sub> (mod n<sub>0</sub>)**. Dễ thấy, chỉ cần nhân n<sub>0</sub> vào c<sub>1</sub> và c<sub>2</sub> thì **2 số hạng n<sub>0</sub>c<sub>1</sub> và n<sub>0</sub>c<sub>2</sub> sẽ chia hết cho số mô đun n<sub>0</sub>**, từ đó cả 2 bị triệt tiêu ngay lập tức. 
 
-Đương nhiên đây chỉ mới là một phương trình nên ta cần tổng quát như sau: mỗi **c<sub>i</sub>** tương ứng với một **n<sub>i</sub>** thì cần nhân thêm hệ số **N<sub>i</sub> = N / n<sub>i</sub>**. Khi đó
+Đương nhiên đây chỉ mới là một phương trình của hệ nên ta cần tổng quát như sau: mỗi **c<sub>i</sub>** tương ứng với một **n<sub>i</sub>** thì cần nhân thêm hệ số **N<sub>i</sub> = N / n<sub>i</sub>**. Khi đó, số hạng **c<sub>i</sub>N<sub>i</sub> sẽ bị triệt tiêu** khi mod các số mô đun còn lại **ngoại trừ số mô đun n<sub>i</sub> tương ứng của nó**.
+
+<div align="center"><img width="619" height="402" alt="image" src="https://github.com/user-attachments/assets/0964c4d9-6159-447c-be46-230d1d6d9e1d" /></div>
 
 <a id="solution"></a>
 ### 4. Lời giải 
