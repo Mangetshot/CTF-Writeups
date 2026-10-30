@@ -5,7 +5,7 @@ n_list = []
 c_list = []
 n, e, c = 0, 0, 0
 
-with open('/media/mangetshot/304E07574E0714EE/STUDY MATERIAL/Cybersecurity/Cryptography/Challenges/Training2026/RSA/output_0ef6d6343784e59e2f44f61d2d29896f.txt', 'r') as f: #Thu thập các giá trị n, e, c từ file output.txt
+with open('output_0ef6d6343784e59e2f44f61d2d29896f.txt', 'r') as f: #Thu thập các giá trị n, e, c từ file output.txt
     for line in f.readlines():
         first = line[0]
         stripped = line.strip()[4:]
