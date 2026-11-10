@@ -31,4 +31,4 @@ File này hiện ra một đoạn HTML có chứa chuỗi kí tự nhìn rất g
 
 <div align="center"><img width="982" height="687" alt="image" src="https://github.com/user-attachments/assets/f5ae0f50-079c-4924-b08b-337ed29b6cb1" /></div>
 
-**Flag: `HUTECHCTF{4r3_y0u_r0b0ts??}`**
+**Flag:** `HUTECHCTF{4r3_y0u_r0b0ts??}`
