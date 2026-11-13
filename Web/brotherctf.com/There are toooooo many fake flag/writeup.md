@@ -21,7 +21,7 @@ Mình thử vào file robots.txt có gì không và nó hiện ra đống flag g
 
 Bro thật sự bị rickroll vào năm 2026 lớn =))
 
-Còn lại thư mục /backup thì trông có vẻ khả quan hơn vì nó hiện một chuỗi kí tự rất giống đã được mã hóa Base64. Mình đã chuyển ngược lại thử và nhận lại một chuỗi có vẻ là vẫn đang ở dạng Base64 nên mình decode lần 2 tiếp, và đã nhận được flag thật...
+Còn lại thư mục /backup thì trông có vẻ khả quan hơn vì nó hiện một chuỗi kí tự rất giống đã được mã hóa Base64 (dấu hiện dễ nhận biết nhất là có dấu = ở cuối xuất phát từ việc padding khi mã hóa Base64). Mình đã chuyển ngược lại thử và nhận lại một chuỗi có vẻ là vẫn đang ở dạng Base64 nên mình decode lần 2 tiếp, và đã nhận được flag thật...
 
 <div align="center"><img width="1054" height="143" alt="image" src="https://github.com/user-attachments/assets/c898e122-c12a-471b-9bf1-2db7bacda69f" /></div>
 <div align="center"><img width="986" height="513" alt="image" src="https://github.com/user-attachments/assets/37476183-0977-4c3d-a34b-9d9ec278dfc0" /></div>
@@ -33,9 +33,13 @@ Sau đó mình bắt đầu đi theo hướng khác là kiểm tra _cookie_ củ
 
 <div align="center"><img width="1061" height="385" alt="image" src="https://github.com/user-attachments/assets/2bdfce79-1470-44a2-8326-6cf448e515a5" /></div>
 
-Giá trị này có vẻ đang ở dạng URL encoding (hay percent encoding, xem thêm tại [đây](https://www.geeksforgeeks.org/html/html-url-encoding/)) và trình duyệt mình có tính năng decode sẵn luôn. Lúc này giá trị là `Z3Vlc3Q=` đang ở dạng Base64 (dấu hiện dễ nhận ra nhất là có dấu = ở cuối xuất phát từ việc padding khi mã hóa Base64). Khi decode thì nó ra `guest`, và lúc này mình nghĩ ra hướng là thay thành admin vô để xem coi web cho mình thêm quyền hạn gì.
+Giá trị này có vẻ đang ở dạng URL encoding (hay percent encoding, xem thêm tại [đây](https://www.geeksforgeeks.org/html/html-url-encoding/)). Trình duyệt mình có tính năng decode sẵn luôn và ra `Z3Vlc3Q=`, đang ở dạng Base64. Khi decode thì nó ra `guest`, và lúc này mình nghĩ ra hướng là thế `admin` vô để xem coi web cho mình thêm quyền hạn gì.
 
-Trước khi bỏ vào thì ta cần Base64 nó trước, sau đó URL encode rồi mới bỏ vào cookie: 
+Trước đó thì ta cần Base64 nó trước, sau đó URL encode ra `YWRtaW4%3D` rồi mới bỏ vào cookie và tải lại trang (nhớ quay về thư mục root của web):
 
+<div align="center"><img width="1057" height="350" alt="image" src="https://github.com/user-attachments/assets/a5adf469-56aa-4023-b3b5-5f59d5c7d251" /></div>
+<div align="center"><img width="1108" height="193" alt="image" src="https://github.com/user-attachments/assets/061fe76c-a84b-4ee4-acfd-abc7cba6692c" /></div>
 
-<div align="center"></div>
+Và ta đã có flag :D
+
+**Flag:** `HUTECHCTF{H3ll0_r34l_4dm1n.}`
