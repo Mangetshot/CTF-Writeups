@@ -2,7 +2,7 @@
 
 **Event: brotherctf.com | Category: Web | Difficulty: Easy | Date: 10/11/2026 | [Challenge](https://brotherctf.com/practice/indexing)**
 
-Đây là bài Web đầu tiên mình giải được trên brotherctf.com và cũng khá là dễ (Ban đầu mình làm bài Check It Out nhưng không giải ra nên mới qua bài này =)) ).
+Đây là bài Web đầu tiên mình giải được trên brotherctf.com và cũng khá là dễ (Ban đầu mình làm bài [Check It Out](https://github.com/Mangetshot/CTF-Writeups/blob/main/Web/brotherctf.com/Check%20It%20Out/writeup.md) nhưng không giải ra nên mới qua bài này =)) ).
 
 ## Quá trình giải
 Khi mới vào địa chỉ web thì nó chẳng hiện ra gì cả: 
