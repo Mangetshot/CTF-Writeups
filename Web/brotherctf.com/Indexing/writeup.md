@@ -1,4 +1,4 @@
-# INDEXING
+# Indexing
 
 **Event: brotherctf.com | Category: Web | Difficulty: Easy | Date: 10/11/2026 | [Challenge](https://brotherctf.com/practice/indexing)**
 
